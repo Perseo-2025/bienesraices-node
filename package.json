@@ -1,0 +1,34 @@
+{
+  "name": "bienesraices",
+  "version": "1.0.0",
+  "description": "Mi primer proyecto con node",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perseo-2025/bienesraices-node.git"
+  },
+  "keywords": [
+    "MVC",
+    "Pug",
+    "Tailwind",
+    "Mysql",
+    "Sequelize"
+  ],
+  "author": "Rey Perseo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Perseo-2025/bienesraices-node/issues"
+  },
+  "homepage": "https://github.com/Perseo-2025/bienesraices-node#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
