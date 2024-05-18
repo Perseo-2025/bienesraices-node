@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Bienes Raices | #{pagina}
+        link(rel="stylesheet", href="/css/app.css")
+        link(rel="shortcut icon", href="/img/logobr.ico", type="image/x-icon")
+
+    body.min-h-screen.bg-gray-50
+
+        main(class="mx-auto container p-15")
+            block contenido
+        
+    footer
+        block pie
