@@ -1,7 +1,6 @@
 import { check, validationResult } from "express-validator"
 import bcrypt from 'bcrypt'
-import  jwt  from "jsonwebtoken"
-import Usuario from "../models/usuario.js"
+import Usuario from "../models/Usuario.js"
 import { generarJWT,generarId } from "../helpers/token.js" 
 import { emailRegistro, emailOlvidePassword } from "../helpers/emails.js"
 
