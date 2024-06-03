@@ -7,7 +7,6 @@ const protegerRuta = async(req, res, next) => {
     if(!_token){
         return res.redirect('/auth/login')
     }
-
     //Comprobar el token
     try {
         const decoded = jwt.verify(_token,process.env.JWT_SECRET)
@@ -20,10 +19,9 @@ const protegerRuta = async(req, res, next) => {
         }
         return next();
     } catch (error) {
-        return res.clearCookie('_token').redirect('auth/login')
+        return res.clearCookie('_token').redirect('/auth/login')
     }
 
-    next();
 }
 
 export default protegerRuta

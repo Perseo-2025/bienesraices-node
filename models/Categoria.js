@@ -6,10 +6,6 @@ const Categoria = db.define('categorias', {
         type: DataTypes.STRING(30),
         allowNull: false
     },
-    nombre: {
-        type: DataTypes.STRING(30),
-        allowNull: false
-    },
 
 })
 

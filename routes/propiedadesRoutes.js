@@ -1,8 +1,17 @@
 import express from 'express'
 import {body} from 'express-validator'
-import { admin, crear, guardar, agregarImagen, almacenarImagen,editar, guardarCambios, eliminar, mostrarPropiedad } from '../controllers/propiedadController.js'
+import { 
+    admin, 
+    crear,
+    guardar, 
+    agregarImagen, 
+    almacenarImagen,
+    editar, guardarCambios, 
+    eliminar, mostrarPropiedad, 
+    enviarMensaje, verMensajes, cambiarEstado } from '../controllers/propiedadController.js'
 import protegerRuta from '../middleware/protegerRuta.js'
 import upload from '../middleware/subirImagen.js'
+import usuarioAutenticado from '../middleware/usuarioAutenticado.js'
 
 const router = express.Router()
 
@@ -43,15 +52,23 @@ router.post('/propiedades/editar/:id', protegerRuta,
     body('lat').notEmpty().withMessage('Ubica la propiedad en el mapa'),
     guardarCambios )
 
-
+// Ruta para eliminar
 router.post('/propiedades/eliminar/:id', protegerRuta, eliminar)
 
-
+//
+router.put('/propiedades/:id', protegerRuta, cambiarEstado)
 
 // Aréa Publica
-router.get('/propiedad/:id',
-    mostrarPropiedad
+router.get('/propiedad/:id', usuarioAutenticado, mostrarPropiedad)
+
+// Almacenar los mensajes
+router.post('/propiedad/:id',
+    usuarioAutenticado,
+    body('mensaje').isLength({min: 20}).withMessage('El Mensaje no puede ir vacío o es muy corto'),
+    enviarMensaje
 )
+
+router.get('/mensajes/:id', protegerRuta, verMensajes)
 
 export default router
 
