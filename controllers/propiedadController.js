@@ -16,7 +16,6 @@ const admin = async (req, res) => {
 
     try {
         const { id } = req.usuario
-
         //Limites y Offset para el paginador
         const limite = 5;
         const offset = ((paginaActual * limite) - limite)
@@ -30,6 +29,7 @@ const admin = async (req, res) => {
                     { model: Categoria, as: 'categoria' },
                     { model: Precio, as: 'precio' },
                     { model: Mensaje, as: 'mensajes' },
+                    { model: Usuario, as: 'usuario' },
                 ]
             }),
             Propiedad.count({
@@ -55,6 +55,18 @@ const admin = async (req, res) => {
         console.log(error)
     }
 
+}
+const verPerfil = async(req, res) => {
+    const {name} = req.usuario
+
+    const user = await Usuario.findByPk(name)
+    
+
+    res.render('propiedades/perfil',{
+        pagina: 'Mi Perfil',
+        csrfToken: req.csrfToken(),
+        user
+    })
 }
 
 //Formulario sobre crear una propiedad
@@ -344,7 +356,7 @@ const mostrarPropiedad = async (req, res) => {
         include: [
             { model: Precio, as: 'precio' },
             { model: Categoria, as: 'categoria' },
-            //{model: Usuario, as: 'usuario'},
+            {model: Usuario, as: 'usuario'},
 
         ]
     })
@@ -410,7 +422,6 @@ const enviarMensaje = async (req, res) => {
 }
 
 //Leer mensajes recibidos
-
 const  verMensajes = async(req, res) =>{
     
     const { id } = req.params
@@ -442,6 +453,8 @@ const  verMensajes = async(req, res) =>{
     })
 }
 
+
+
 export {
     admin,
     crear,
@@ -454,5 +467,6 @@ export {
     cambiarEstado,
     mostrarPropiedad,
     enviarMensaje,
-    verMensajes
+    verMensajes,
+    verPerfil
 }

@@ -73,8 +73,8 @@ const autenticar = async (req, res) => {
     return res.cookie('_token', token, {
         httpOnly: true,
         //secure: true
-    }).redirect('/mis-propiedades')
-
+    }).redirect('/usuario') //redireccion
+    //puedo redireccionar al usuario directo a 'mis-propiedades'
 }
 const formularioRegistro = (req, res) => {
     res.render('auth/registro', {

@@ -8,14 +8,14 @@ import {
     almacenarImagen,
     editar, guardarCambios, 
     eliminar, mostrarPropiedad, 
-    enviarMensaje, verMensajes, cambiarEstado } from '../controllers/propiedadController.js'
+    enviarMensaje, verMensajes, cambiarEstado, verPerfil } from '../controllers/propiedadController.js'
 import protegerRuta from '../middleware/protegerRuta.js'
 import upload from '../middleware/subirImagen.js'
 import usuarioAutenticado from '../middleware/usuarioAutenticado.js'
 
 const router = express.Router()
 
-
+router.get('/usuario', protegerRuta, verPerfil)
 router.get('/mis-propiedades', protegerRuta ,admin )
 router.get('/propiedades/crear', protegerRuta, crear )
 router.post('/propiedades/crear', protegerRuta,
@@ -67,8 +67,10 @@ router.post('/propiedad/:id',
     body('mensaje').isLength({min: 20}).withMessage('El Mensaje no puede ir vacío o es muy corto'),
     enviarMensaje
 )
-
 router.get('/mensajes/:id', protegerRuta, verMensajes)
+
+
+
 
 export default router
 
