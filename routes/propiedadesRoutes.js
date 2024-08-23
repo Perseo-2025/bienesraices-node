@@ -15,7 +15,7 @@ import usuarioAutenticado from '../middleware/usuarioAutenticado.js'
 
 const router = express.Router()
 
-router.get('/usuario', protegerRuta, verPerfil)
+router.get('/usuario:id', protegerRuta, verPerfil)
 router.get('/mis-propiedades', protegerRuta ,admin )
 router.get('/propiedades/crear', protegerRuta, crear )
 router.post('/propiedades/crear', protegerRuta,

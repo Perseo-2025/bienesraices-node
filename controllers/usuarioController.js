@@ -15,7 +15,7 @@ const formularioLogin = (req, res) => {
     })
 }
 const cerrarSesión = (req, res) => {
-    return res.clearCookie('_token').status(200).redirect('/auth/login')
+    return res.clearCookie('_token').status(200).redirect('/')
 }
 const autenticar = async (req, res) => {
     //Validacion
