@@ -85,8 +85,23 @@ const formularioRegistro = (req, res) => {
 const registrar = async (req, res) =>{
     // valdiacion
     await check('nombre').notEmpty().withMessage('Campo vacío').run(req)
+
+    await check('apellido').notEmpty().withMessage('Campo vacío').run(req)
+
+    await check('telefono').notEmpty().withMessage('Campo vacío').isNumeric().withMessage('Solo numeros').run(req)
+    await check('telefono').isLength({max:9}).withMessage('El telefono debe tener 9 caracteres').run(req) 
+   
+    await check('edad').notEmpty().withMessage('Campo vacío').isNumeric().withMessage('La edad debe ser numerico').run(req)
+    await check('edad').isInt({min:18}).withMessage('Edad minima: 18').run(req)
+
     await check('email').isEmail().withMessage('Email no válido').run(req)
-    await check('password').isLength({min:6}).withMessage('El Password debe ser al menos 6 caracteres').run(req)  
+    
+    await check('password').isLength({min:6}).withMessage('El Password debe ser al menos 6 caracteres').run(req) 
+    await check('password').matches(/[A-Z]/).withMessage('El Password debe contener al menos una letra mayúscula').run(req)
+    await check('password').matches(/[a-z]/).withMessage('El Password debe contener al menos una letra minúscula').run(req)
+    await check('password').matches(/[1-9]/).withMessage('El Password debe contener al menos un numero').run(req)
+    await check('password').matches(/[!@#~%&€*]/).withMessage('El Password debe contener al menos un caracter especial').run(req)
+    
     await check('repetir_password').equals(req.body.password).withMessage('El Password no coinciden').run(req)  
     
     //console.log(req.body)
@@ -108,7 +123,7 @@ const registrar = async (req, res) =>{
             })
         }
 
-    const {nombre, email, password} = req.body
+    const {nombre,apellido,telefono,edad, email, password} = req.body
 
     //Verificar que el usuario no este duplciado
 
@@ -131,6 +146,9 @@ const registrar = async (req, res) =>{
     // Almacenar un usuario
     const usuario = await Usuario.create({
         nombre,
+        apellido,
+        telefono,
+        edad,
         email,
         password,
         token: generarId()

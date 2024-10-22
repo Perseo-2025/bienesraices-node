@@ -17,7 +17,16 @@ block contenido
                     input(type="hidden" name="_csrf" value=csrfToken)
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="nombre") Tu Nombre
-                        input#nombre.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="You" type="text" name="nombre" value= usuario ?usuario.nombre : '')
+                        input#nombre.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="Name" type="text" name="nombre" value= usuario ?usuario.nombre : '')
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="apellido") Tu Apellido
+                        input#nombre.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="Surname" type="text" name="apellido" value= usuario ?usuario.apellido : '')
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="telefono") Telefono
+                        input#nombre.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="Phone" type="text" name="telefono" value= usuario ?usuario.telefono : '')
+                    div 
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="edad") Edad
+                        input#nombre.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="Phone" type="text" name="edad" value= usuario ?usuario.edad : '')    
                     div 
                         label.block.text-sm.uppercase.text-gray-500.mb-2.mt-2.font-bold(for="email") Gmail
                         input#email.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="you@example.com" type="email" name="email" value= usuario ?usuario.email : '')
