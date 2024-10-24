@@ -10,6 +10,7 @@ const router = express.Router()
 router.get('/login', formularioLogin );
 router.post('/login', autenticar );
 
+
 //Cerrando Sesion
 router.post('/cerrar-sesion', cerrarSesión)
 
