@@ -20,6 +20,9 @@ app.use(cookieParser())
 // Habilitar CSRF
 app.use(csrf({cookie: true}))
 
+//habilitar íconos
+app.use(express.static('node_modules/@fortawesome/fontawesome-free'));
+
 
 //conexion a la bd
 try {
