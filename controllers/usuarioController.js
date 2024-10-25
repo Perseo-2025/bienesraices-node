@@ -91,6 +91,27 @@ const registrar = async (req, res) =>{
 
     await check('telefono').notEmpty().withMessage('Campo vacío').isNumeric().withMessage('Solo numeros').run(req)
     await check('telefono').isLength({max:9}).withMessage('El telefono debe tener 9 caracteres').run(req) 
+
+    await check('fechaNacimiento')
+    .notEmpty().withMessage('La fecha de nacimiento es obligatoria')
+    .custom((value) => {
+      const fechaNacimiento = new Date(value);
+      const hoy = new Date();
+      const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+      const dia = hoy.getDate() - fechaNacimiento.getDate();
+
+      if (mes < 0 || (mes === 0 && dia < 0)) {
+        edad--;
+      }
+
+      if (edad < 18) {
+        throw new Error('Debes tener al menos 18 años');
+      }
+      
+      return true;
+    })
+    .run(req);
    
     await check('email').isEmail().withMessage('Email no válido').run(req)
     
