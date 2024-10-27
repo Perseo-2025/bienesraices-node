@@ -59,17 +59,6 @@ const admin = async (req, res) => {
     console.log(error);
   }
 };
-const verPerfil = async (req, res) => {
-  const { name } = req.usuario;
-
-  const user = await Usuario.findByPk(name);
-
-  res.render("propiedades/perfil", {
-    pagina: "Mi Perfil",
-    csrfToken: req.csrfToken(),
-    user,
-  });
-};
 
 //Formulario sobre crear una propiedad
 const crear = async (req, res) => {
@@ -211,6 +200,10 @@ const editar = async (req, res) => {
 
   //validar que la propieda exista
   const propiedad = await Propiedad.findByPk(id);
+  const usuario = await Usuario.findByPk(req.usuario.id);
+  console.log('====================================');
+  console.log(usuario);
+  console.log('====================================');
 
   if (!propiedad) {
     return res.redirect("/mis-propiedades");
@@ -232,6 +225,7 @@ const editar = async (req, res) => {
     csrfToken: req.csrfToken(),
     categorias,
     precios,
+    usuario: req.usuario,
     datos: propiedad,
   });
 };
@@ -471,5 +465,4 @@ export {
   mostrarPropiedad,
   enviarMensaje,
   verMensajes,
-  verPerfil,
 };

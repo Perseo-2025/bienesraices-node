@@ -8,14 +8,13 @@ import {
     almacenarImagen,
     editar, guardarCambios, 
     eliminar, mostrarPropiedad, 
-    enviarMensaje, verMensajes, cambiarEstado, verPerfil } from '../controllers/propiedadController.js'
+    enviarMensaje, verMensajes, cambiarEstado } from '../controllers/propiedadController.js'
 import protegerRuta from '../middleware/protegerRuta.js'
 import upload from '../middleware/subirImagen.js'
 import usuarioAutenticado from '../middleware/usuarioAutenticado.js'
 
 const router = express.Router()
 
-router.get('/usuario:id', protegerRuta, verPerfil)
 router.get('/mis-propiedades', protegerRuta ,admin )
 router.get('/propiedades/crear', protegerRuta, crear )
 router.post('/propiedades/crear', protegerRuta,

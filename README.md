@@ -18,7 +18,9 @@ Para instalar el proyecto, aseg√∫rate de tener Node.js y npm instalados en tu m√
 $ npm install
 ```
 
-3. Correr la aplicacion
+3. Crear un archivo .env y colocar las variables de entorno
+
+4. Correr la aplicacion
 
 ```bash
 # development

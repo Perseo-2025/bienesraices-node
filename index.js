@@ -22,7 +22,7 @@ app.use(csrf({cookie: true}))
 
 //habilitar íconos
 app.use(express.static('node_modules/@fortawesome/fontawesome-free'));
-
+app.use(express.static('public'));
 
 //conexion a la bd
 try {

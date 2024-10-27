@@ -1,0 +1,47 @@
+extends ./layout/app
+
+block contenido 
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10")=pagina
+
+        form#simulationForm(action="/simulacion-credito-hipotecario" method="post")
+            input(type="hidden" name="_csrf" value=csrfToken)
+            br
+            label(for="amountInmueble") Monto del inmueble:
+            input#amountInmueble(type="number" min="0" step="0.01" required name="amountInmueble")
+            br
+            label(for="porcentageInmueble") Porcentaje de cuota inicial (%):
+            input#porcentageInmueble(type="number" min="0" max="100" step="0.01" required name="porcentageInmueble")
+            br
+            label(for="tea") Tasa Efectiva Anual (TEA) (%):
+            input#tea(type="number" min="0" step="0.01" required name="tea")
+            br
+            label(for="plazoMeses") Plazo (meses):
+            input#plazoMeses(type="number" min="1" required name="plazoMeses")
+            br
+            button(type="submit") Calcular
+            br
+        //- Área de resultados
+        if typeof totalInicialInmueble !== 'undefined'
+            h2 Resultados de Simulación
+            p Total inicial inmueble: 
+                span#totalInicialInmueble S/ #{totalInicialInmueble}
+            p Total monto capital:
+                span#totalMontoCapital S/ #{totalMontoCapital}
+            p Tasa Efectiva Mensual (TEM):
+                span#tem #{tem * 100}%
+            p Pago mensual:
+                span#pagoMensual S/ #{pagoMensual}
+            br
+            //- Área de resultados cuando se usa el script de cliente
+        h2 Resultados de Simulación en línea
+        p Total inicial inmueble: 
+        span#totalInicialInmueble
+        p Total monto capital:
+        span#totalMontoCapital
+        p Tasa Efectiva Mensual (TEM):
+        span#tem
+        p Pago mensual:
+        span#pagoMensual
+
+        script(src="/calcular.js")

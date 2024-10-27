@@ -77,6 +77,30 @@ const categoria = async(req, res) => {
     })
 
 }
+const credito = (req, res) => {
+
+    const { amountInmueble, porcentageInmueble, tea, plazoMeses } = req.body;
+
+  // Validación de los datos ingresados
+  if (!amountInmueble || !porcentageInmueble || !tea || !plazoMeses) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+
+  const totalInicialInmueble = amountInmueble * porcentageInmueble;
+  const totalMontoCapital = amountInmueble - totalInicialInmueble;
+  const tem = Math.pow(1 + parseFloat(tea), 1 / 12) - 1;
+  const pagoMensual = (totalMontoCapital * tem) / (1 - Math.pow(1 + tem, -parseInt(plazoMeses)));
+
+  // Devuelve JSON para manejar en el cliente
+  res.json({
+    totalInicialInmueble: totalInicialInmueble.toFixed(2),
+    totalMontoCapital: totalMontoCapital.toFixed(2),
+    tem: tem.toFixed(6),
+    pagoMensual: pagoMensual.toFixed(2),
+    csrfToken: req.csrfToken(),
+  });
+}
+
 const noEncontrado = (req, res) => {
     res.render('404',{
         pagina: 'No encontrada',
@@ -116,5 +140,5 @@ export {
     categoria,
     noEncontrado,
     buscador,
-    
+    credito
 }
