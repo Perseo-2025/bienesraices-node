@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize"
 import { Precio, Categoria, Propiedad } from "../models/index.js"
+import Credito from "../models/Credito.js"
 
 const inicio = async(req, res) => {
 
@@ -73,11 +74,59 @@ const categoria = async(req, res) => {
     res.render('categoria', {
         pagina:  `${categoria.nombre}s en Venta`,
         propiedades,
-        csrfToken: req.csrfToken()   
+        csrfToken: req.csrfToken()
     })
 
 }
-const credito = (req, res) => {
+
+const creditoh = (req, res) => {
+    res.render('credito', {
+      pagina: 'Simulación de Crédito Hipotecario',
+      csrfToken: req.csrfToken(),
+    });
+}
+
+const crearCalculo = async (req, res) => {
+    let resultado = validationResult(req);
+    console.log("guardando ", resultado);
+
+    if(!resultado.isEmpty()){
+        return res.render('credito', {
+            pagina: 'Simulación de Crédito Hipotecario',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array(),
+            datos: req.body,
+        });
+    }
+
+    const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoMeses} = req.body;
+    const { id: usuarioId } = req.usuario;
+
+    const cuotaInicial = montoInmueble * cuotaInicialPorcentaje;
+    const montoCapital = montoInmueble - cuotaInicial;
+    const TEM = Math.pow(1 + parseFloat(TEA), 1 / 12) - 1;
+    const pagoMensual = (montoCapital * TEM) / (1 - Math.pow(1 + TEM, -parseInt(plazoMeses)));
+
+    try {
+        const creditoGuardado = await Credito.create({
+            montoInmueble,
+            cuotaInicialPorcentaje,
+            TEA,
+            plazoMeses,
+            cuotaInicial,
+            montoCapital,
+            TEM,
+            pagoMensual,
+            usuarioId
+        });
+        await creditoGuardado.save();
+        res.redirect('/simulacion-credito-hipotecario');
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/* const credito = (req, res) => {
 
     const { amountInmueble, porcentageInmueble, tea, plazoMeses } = req.body;
 
@@ -99,7 +148,7 @@ const credito = (req, res) => {
     pagoMensual: pagoMensual.toFixed(2),
     csrfToken: req.csrfToken(),
   });
-}
+} */
 
 const noEncontrado = (req, res) => {
     res.render('404',{
@@ -140,5 +189,6 @@ export {
     categoria,
     noEncontrado,
     buscador,
-    credito
+    creditoh,
+    crearCalculo
 }

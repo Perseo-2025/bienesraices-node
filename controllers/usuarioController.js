@@ -90,10 +90,28 @@ const registrar = async (req, res) =>{
 
     await check('telefono').notEmpty().withMessage('Campo vacío').isNumeric().withMessage('Solo numeros').run(req)
     await check('telefono').isLength({max:9}).withMessage('El telefono debe tener 9 caracteres').run(req) 
-   
-    await check('edad').notEmpty().withMessage('Campo vacío').isNumeric().withMessage('La edad debe ser numerico').run(req)
-    await check('edad').isInt({min:18}).withMessage('Edad minima: 18').run(req)
 
+    await check('fechaNacimiento')
+    .notEmpty().withMessage('La fecha de nacimiento es obligatoria')
+    .custom((value) => {
+      const fechaNacimiento = new Date(value);
+      const hoy = new Date();
+      const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+      const dia = hoy.getDate() - fechaNacimiento.getDate();
+
+      if (mes < 0 || (mes === 0 && dia < 0)) {
+        edad--;
+      }
+
+      if (edad < 18) {
+        throw new Error('Debes tener al menos 18 años');
+      }
+      
+      return true;
+    })
+    .run(req);
+   
     await check('email').isEmail().withMessage('Email no válido').run(req)
     
     await check('password').isLength({min:6}).withMessage('El Password debe ser al menos 6 caracteres').run(req) 
@@ -123,7 +141,7 @@ const registrar = async (req, res) =>{
             })
         }
 
-    const {nombre,apellido,telefono,edad, email, password} = req.body
+    const {nombre,apellido,telefono,fechaNacimiento, email, password} = req.body
 
     //Verificar que el usuario no este duplciado
 
@@ -148,7 +166,7 @@ const registrar = async (req, res) =>{
         nombre,
         apellido,
         telefono,
-        edad,
+        fechaNacimiento,
         email,
         password,
         token: generarId()
@@ -164,8 +182,7 @@ const registrar = async (req, res) =>{
     //Mostrar un mensaje de condfirmacion
     res.render('templates/mensaje', {
         pagina: 'Cuenta Creada Correctamente',
-        mensaje: 'Hemos Enviado un Email de Confirmación, presiona en el enlace'
-
+        mensaje: 'Hemos Enviado un Email de Confirmación, revisa tu correo'
     })
 
 }   

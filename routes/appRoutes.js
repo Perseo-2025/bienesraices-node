@@ -1,5 +1,6 @@
 import  express from 'express'
-import { inicio,categoria,noEncontrado,buscador, credito } from '../controllers/appController.js'
+import { inicio,categoria,noEncontrado,buscador, creditoh, crearCalculo } from '../controllers/appController.js'
+import protegerRuta from '../middleware/protegerRuta.js'
 
 const router = express.Router()
 
@@ -11,15 +12,10 @@ router.get('/categoria/:id', categoria)
 
 //ruta para renderizar la página de simulación
 
-router.get('/simulacion-credito-hipotecario', (req, res) => {
-    res.render('credito', {
-      pagina: 'Simulación de Crédito Hipotecario',
-      csrfToken: req.csrfToken(),
-    });
-  })
+router.get('/simulacion-credito-hipotecario', protegerRuta, creditoh)
 
-  //ruta para procesar la simulación de c´redito hipotecario
-  router.post('/simulacion-credito-hipotecario', credito)
+//ruta para procesar la simulación de c´redito hipotecario
+router.post('/simulacion-credito-hipotecario', protegerRuta, crearCalculo)
 
 
 //Página 404

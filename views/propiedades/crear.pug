@@ -20,7 +20,7 @@ block contenido
                 br
                 h3.text-lg.leading-6.font-medium.text-gray-900 Información General
                 br
-                p.text-gray-600 Añade Información Sobre la Porpiedad en Venta
+                p.text-gray-600 Añade Información Sobre la Propiedad en Venta
                 div 
                     label.block.text-sm.uppercase.text-gray-500.mb-2.mt-2.font-bold(for="titulo") titulo del anuncio
                     input#titulo.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(placeholder="Casa en la playa" type="text" name="titulo" value=datos.titulo ? datos.titulo : '')
@@ -66,6 +66,15 @@ block contenido
                             - var n = 1;
                                 while n < 5
                                     option( value=n selected= datos.wc ? datos.wc == n ? true : false : null) #{n++}
+
+                // div(class=" md:flex md:gap-4 space-y-8 md:space-y-0")
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.mt-2.font-bold(for="ciudad") Ciudad
+                        select#categoria.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(name="ciudad")
+                            option(value="") - Seleccione -
+                            each ciudad in ciudades
+                                option(value=categoria.id selected= datos.categoria ? datos.categoria == categoria.id ? true : false : null )= categoria.nombre
+                
+                
                 div.border-gray-200.border-t.py-5
                     h3.text-lg.leading-6.font-medium.text-gray-900.font-bold Ubicación
                     br

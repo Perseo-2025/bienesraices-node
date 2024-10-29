@@ -3,6 +3,7 @@ import Precio from './Precio.js'
 import Categoria from './Categoria.js'
 import Usuario from './Usuario.js'
 import Mensaje from './Mensaje.js'
+import Credito from './Credito.js'
 
 
 //Precio.hasOne(Propiedad) //Propiedad tiene un precio
@@ -14,6 +15,7 @@ Propiedad.hasMany(Mensaje, {foreignKey: 'propiedadId'})
 Mensaje.belongsTo(Propiedad, {foreignKey: 'propiedadId'})
 Mensaje.belongsTo(Usuario, {foreignKey: 'usuarioId'})
 
+Usuario.hasMany(Credito, { foreignKey: 'usuarioId' });
 
 export {
     Propiedad,
