@@ -107,10 +107,9 @@ const crearCalculo = async (req, res) => {
     const montoCapital = montoInmueble * (1 - cuotaInicialPorcentaje); 
     const TEAc = TEA/100;
     const TEMp = Math.pow((1 + TEAc), 1 / 12) - 1;
-    const TEM = TEMp * 100;
+    const TEM = TEMp * 100 ;
     const plazoMeses = plazoAnios * 12;
-    const pagoMensual = montoCapital * (TEM / (1 - Math.pow(1 + TEM, -plazoMeses)));
-    console.log(TEM);
+    const pagoMensual = montoCapital * (TEMp / (1 - Math.pow(1 + TEMp, -plazoMeses)));
 
     try {
         const creditoGuardado = await Credito.create({
