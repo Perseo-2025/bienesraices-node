@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize"
 import { Precio, Categoria, Propiedad } from "../models/index.js"
 import Credito from "../models/Credito.js"
+import { validationResult } from "express-validator";
 
 const inicio = async(req, res) => {
 
@@ -99,13 +100,17 @@ const crearCalculo = async (req, res) => {
         });
     }
 
-    const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoMeses} = req.body;
+    const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoAnios} = req.body;
     const { id: usuarioId } = req.usuario;
 
     const cuotaInicial = montoInmueble * cuotaInicialPorcentaje;
-    const montoCapital = montoInmueble - cuotaInicial;
-    const TEM = Math.pow(1 + parseFloat(TEA), 1 / 12) - 1;
-    const pagoMensual = (montoCapital * TEM) / (1 - Math.pow(1 + TEM, -parseInt(plazoMeses)));
+    const montoCapital = montoInmueble * (1 - cuotaInicialPorcentaje); 
+    const TEAc = TEA/100;
+    const TEMp = Math.pow((1 + TEAc), 1 / 12) - 1;
+    const TEM = TEMp * 100;
+    const plazoMeses = plazoAnios * 12;
+    const pagoMensual = montoCapital * (TEM / (1 - Math.pow(1 + TEM, -plazoMeses)));
+    console.log(TEM);
 
     try {
         const creditoGuardado = await Credito.create({
@@ -120,10 +125,12 @@ const crearCalculo = async (req, res) => {
             usuarioId
         });
         await creditoGuardado.save();
+        console.log(creditoGuardado);
         res.redirect('/simulacion-credito-hipotecario');
     } catch (error) {
         console.log(error)
     }
+
 }
 
 /* const credito = (req, res) => {

@@ -20,10 +20,10 @@ block contenido
             input#cuotaInicialPorcentaje(type="number" min="0" max="100" step="0.01" required name="cuotaInicialPorcentaje")
             br
             label(for="TEA") Tasa Efectiva Anual (TEA) (%):
-            input#TEA(type="number" min="0" step="0.01" required name="TEA")
+            input#TEA(type="number" min="0" step="0.001" required name="TEA")
             br
-            label(for="plazoMeses") Plazo (meses):
-            input#plazoMeses(type="number" min="1" required name="plazoMeses")
+            label(for="plazoAnios") Plazo (años):
+            input#plazoAnios(type="number" min="1" required name="plazoAnios")
             br
             input(type="submit"  value="Simular")
 
