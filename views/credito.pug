@@ -1,54 +1,54 @@
 extends ./layout/app
 
-block contenido 
-        section(class="py-5")
-            h2(class="text-center text-4xl font-extrabold pt-10")=pagina
+block contenido
+  section(class="py-5 max-w-md mx-auto")
+    h2(class="text-center text-4xl font-extrabold pt-10 mb-10")= pagina
 
+    if errores
+      div(class="mb-10")
+        each error in errores
+          p(class="bg-red-600 text-white uppercase text-xs text-center p-2 mb-1 font-bold")= error.msg
 
-        if errores
-                    div(class="max-w-md mx-auto my-10")
-                        each error in errores
-                            p.bg-red-600.text-white.uppercase.text-xs.text-center.p-2.mb-1.font-bold= error.msg
+    form#simulationForm(action="/simulacion-credito-hipotecario" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4")
+      input(type="hidden" name="_csrf" value=csrfToken)
+      div(class="mb-4")
+        label(for="montoInmueble" class="block text-gray-700 text-sm font-bold mb-2") Monto del inmueble:
+        input#montoInmueble(type="number" min="0" step="0.01" required name="montoInmueble" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+      div(class="mb-4")
+        label(for="cuotaInicialPorcentaje" class="block text-gray-700 text-sm font-bold mb-2") Porcentaje de cuota inicial (%):
+        input#cuotaInicialPorcentaje(type="number" min="0" max="100" step="0.01" required name="cuotaInicialPorcentaje" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+      div(class="mb-4")
+        label(for="TEA" class="block text-gray-700 text-sm font-bold mb-2") Tasa Efectiva Anual (TEA) (%):
+        input#TEA(type="number" min="0" step="0.001" required name="TEA" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+      div(class="mb-6")
+        label(for="plazoAnios" class="block text-gray-700 text-sm font-bold mb-2") Plazo (años):
+        input#plazoAnios(type="number" min="1" required name="plazoAnios" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+      div(class="flex items-center justify-center")
+        input(type="submit" value="Guardar" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer")
 
-        form#simulationForm(action="/simulacion-credito-hipotecario" method="post")
-            input(type="hidden" name="_csrf" value=csrfToken)
-            br
-            label(for="montoInmueble") Monto del inmueble:
-            input#montoInmueble(type="number" min="0" step="0.01" required name="montoInmueble")
-            br
-            label(for="cuotaInicialPorcentaje") Porcentaje de cuota inicial (%):
-            input#cuotaInicialPorcentaje(type="number" min="0" max="100" step="0.01" required name="cuotaInicialPorcentaje")
-            br
-            label(for="TEA") Tasa Efectiva Anual (TEA) (%):
-            input#TEA(type="number" min="0" step="0.001" required name="TEA")
-            br
-            label(for="plazoAnios") Plazo (años):
-            input#plazoAnios(type="number" min="1" required name="plazoAnios")
-            br
-            input(type="submit"  value="Simular")
+    //- Área de resultados del servidor
+    if typeof cuotaInicial !== 'undefined' && typeof montoCapital !== 'undefined' && typeof TEM !== 'undefined' && typeof pagoMensual !== 'undefined'
+      h2(class="text-2xl font-bold mt-10 mb-4") Resultados de Simulación (Servidor)
+      div(class="bg-gray-100 p-4 rounded mb-4")
+        p(class="mb-2") Total inicial inmueble:
+          span(class="font-bold") S/ #{cuotaInicial.toFixed(2)}
+        p(class="mb-2") Total monto capital:
+          span(class="font-bold") S/ #{montoCapital.toFixed(2)}
+        p(class="mb-2") Tasa Efectiva Mensual (TEM):
+          span(class="font-bold") #{(TEM * 100).toFixed(2)}%
+        p(class="mb-2") Pago mensual:
+          span(class="font-bold") S/ #{pagoMensual.toFixed(2)}
 
-            br
-        //- Área de resultados
-        if typeof totalInicialInmueble !== 'undefined'
-            h2 Resultados de Simulación
-            p Total inicial inmueble: 
-                span#cuotaInicial S/ #{cuotaInicial}
-            p Total monto capital:
-                span#montoCapital S/ #{montoCapital}
-            p Tasa Efectiva Mensual (TEM):
-                span#TEM #{TEM * 100}%
-            p Pago mensual:
-                span#pagoMensual S/ #{pagoMensual}
-            br
-            //- Área de resultados cuando se usa el script de cliente
-        h2 Resultados de Simulación en línea
-        p Total inicial inmueble: 
-        span#cuotaInicial
-        p Total monto capital:
-        span#montoCapital
-        p Tasa Efectiva Mensual (TEM):
-        span#TEM
-        p Pago mensual:
-        span#pagoMensual
+    //- Área de resultados en tiempo real
+    h2(class="text-2xl font-bold mt-10 mb-4") Resultados de Simulación en línea
+    div(class="bg-gray-100 p-4 rounded mb-4")
+      p(class="mb-2") Total inicial inmueble:
+        span#cuotaInicial(class="font-bold") -
+      p(class="mb-2") Total monto capital:
+        span#montoCapital(class="font-bold") -
+      p(class="mb-2") Tasa Efectiva Mensual (TEM):
+        span#TEM(class="font-bold") -
+      p(class="mb-2") Pago mensual:
+        span#pagoMensual(class="font-bold") -
 
-        
+  script(src="/js/simulacion.js")

@@ -213,6 +213,7 @@ const comprobar = async (req, res, ) =>{
         mensaje: '¡La Cuenta se confirmó Correctamente!'
     })  
 }
+
 const formularioOlvidePassword = (req, res) => {
     res.render('auth/restaurar-password', {
         pagina: 'Recuperar Password',
