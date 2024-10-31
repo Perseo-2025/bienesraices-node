@@ -66,6 +66,14 @@ block contenido
                             - var n = 1;
                                 while n < 5
                                     option( value=n selected= datos.wc ? datos.wc == n ? true : false : null) #{n++}
+
+                div(class=" md:flex md:gap-4 space-y-8 md:space-y-0")
+                    label.block.text-sm.uppercase.text-gray-500.mb-2.mt-2.font-bold(for="ciudad") Ciudad
+                    select#ciudad.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(name="ciudad")
+                        option(value="") - Seleccione -
+                        each ciudad in ciudades
+                            option(value=ciudad.id selected= datos.ciudad ? datos.ciudad == ciudad.id ? true : false : null )= ciudad.nombre
+
                 div.border-gray-200.border-t.py-5
                     h3.text-lg.leading-6.font-medium.text-gray-900.font-bold Ubicación
                     br
