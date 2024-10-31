@@ -19,6 +19,7 @@ document.getElementById('simulationForm').addEventListener('submit', async funct
           porcentageInmueble,
           tea,
           plazoMeses,
+          
           _csrf: csrfToken // Incluye el token en el cuerpo
         }),
       });

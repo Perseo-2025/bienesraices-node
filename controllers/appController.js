@@ -80,10 +80,17 @@ const categoria = async(req, res) => {
 
 }
 
-const creditoh = (req, res) => {
+//agregar propiedades
+const creditoh = async (req, res) => {
+    const [ propiedades] = await Promise.all([
+        Propiedad.findAll(),
+      ]);
+
     res.render('credito', {
       pagina: 'Simulación de Crédito Hipotecario',
       csrfToken: req.csrfToken(),
+      propiedades,
+      datos: {},
     });
 }
 
@@ -92,17 +99,22 @@ const crearCalculo = async (req, res) => {
     console.log("guardando ", resultado);
 
     if(!resultado.isEmpty()){
+        const [ propiedades] = await Promise.all([
+            Propiedad.findAll(),
+        ]);
+          
         return res.render('credito', {
             pagina: 'Simulación de Crédito Hipotecario',
             csrfToken: req.csrfToken(),
-            errores: resultado.array(),
+            propiedades,
+            errores: resultado.array(),            
             datos: req.body,
         });
     }
 
-    const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoAnios} = req.body;
+    const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoAnios, propiedad} = req.body;
     const { id: usuarioId } = req.usuario;
-    const { id: propiedadId} = req.Propiedad;
+    
 
     const cuotaInicial = montoInmueble * cuotaInicialPorcentaje;
     const montoCapital = montoInmueble * (1 - cuotaInicialPorcentaje); 
@@ -123,7 +135,7 @@ const crearCalculo = async (req, res) => {
             TEM,
             pagoMensual,
             usuarioId,
-            propiedadId,
+            propiedadId:propiedad,
         });
         await creditoGuardado.save();
         console.log(creditoGuardado);
