@@ -380,6 +380,10 @@ const mostrarPropiedad = async (req, res) => {
     return res.redirect("/404");
   }
 
+  // Incrementa el contador de visitas
+  propiedad.visitas += 1;
+  await propiedad.save();
+
   res.render("propiedades/mostrar", {
     propiedad,
     pagina: propiedad.titulo,

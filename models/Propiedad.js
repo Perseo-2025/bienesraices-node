@@ -42,6 +42,10 @@ const Propiedad = db.define('propiedades', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    visitas: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
     }
 
 })
