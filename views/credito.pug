@@ -58,5 +58,17 @@ block contenido
         span#TEM(class="font-bold") -
       p(class="mb-2") Pago mensual:
         span#pagoMensual(class="font-bold") -
+      p(class="mb-2") Cronograma de Pagos: <br>
+
+      //- Tabla para mostrar el cronograma
+      table(id="tablaCronograma" class="w-full m-auto bg-white mt-4 border border-gray-300")
+        thead
+          tr
+            th(class="px-4 py-2 border-b font-semibold text-gray-700") Mes
+            th(class="px-4 py-2 border-b font-semibold text-gray-700") Pago Mensual
+            th(class="px-4 py-2 border-b font-semibold text-gray-700") Interés Mensual
+            th(class="px-4 py-2 border-b font-semibold text-gray-700") Aporte Capital
+            th(class="px-4 py-2 border-b font-semibold text-gray-700") Saldo
+        tbody
 
   script(src="/js/simulacion.js")
