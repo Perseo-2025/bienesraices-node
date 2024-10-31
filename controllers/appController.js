@@ -73,7 +73,7 @@ const categoria = async(req, res) => {
     })
 
     res.render('categoria', {
-        pagina:  `${categoria.nombre}s en Venta`,
+        pagina:  `${categoria.nombre} en Venta`,
         propiedades,
         csrfToken: req.csrfToken()
     })
