@@ -12,3 +12,5 @@ const ciudad = [
         nombre: 'VMT'
     },
 ]
+
+export default ciudad
