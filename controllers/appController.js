@@ -102,6 +102,7 @@ const crearCalculo = async (req, res) => {
 
     const {montoInmueble, cuotaInicialPorcentaje, TEA, plazoAnios} = req.body;
     const { id: usuarioId } = req.usuario;
+    const { id: propiedadId} = req.Propiedad;
 
     const cuotaInicial = montoInmueble * cuotaInicialPorcentaje;
     const montoCapital = montoInmueble * (1 - cuotaInicialPorcentaje); 
@@ -121,7 +122,8 @@ const crearCalculo = async (req, res) => {
             montoCapital,
             TEM,
             pagoMensual,
-            usuarioId
+            usuarioId,
+            propiedadId,
         });
         await creditoGuardado.save();
         console.log(creditoGuardado);

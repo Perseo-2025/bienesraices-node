@@ -15,11 +15,14 @@ Propiedad.belongsTo(Ciudad, {foreignKey: 'ciudadId'})
 Propiedad.belongsTo(Usuario, {foreignKey: 'usuarioId'})
 Propiedad.hasMany(Mensaje, {foreignKey: 'propiedadId'})
 
+
+
 Mensaje.belongsTo(Propiedad, {foreignKey: 'propiedadId'})
 Mensaje.belongsTo(Usuario, {foreignKey: 'usuarioId'})
 
 
 Usuario.hasMany(Credito, { foreignKey: 'usuarioId' });
+Propiedad.hasMany(Credito, {foreignKey: 'propiedadId'})
 
 export {
     Propiedad,
